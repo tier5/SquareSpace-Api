@@ -53,7 +53,7 @@
                <div class="panel panel-default">
                   <div class="panel-heading">Create Label</div>
                   <div class="panel-body">
-                     <form class="form-horizontal" id="create-label" method="POST" action="/get-label">
+                     <form class="form-horizontal" id="create-label" method="POST" action="get-label">
                         {{ csrf_field() }}
                         <div class="form-group">
                            <label for="address" class="col-md-4 control-label">Name</label>

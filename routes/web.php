@@ -20,7 +20,7 @@ Route::get('/index', function () {
     return view('index');
 });
 
-Route::post('/get-label', ['uses' => 'LabelController@getLabel', 'https' => true])->name('getLabel');
+Route::post('get-label', ['uses' => 'LabelController@getLabel', 'https' => true])->name('getLabel');
 
 
 Auth::routes();
