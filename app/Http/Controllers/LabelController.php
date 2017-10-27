@@ -5,6 +5,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request;
 use EasyPost;
+use Session;
 use App;
 use View;
 use PDF;
@@ -16,59 +17,80 @@ class LabelController extends Controller
 
     public function generateLabel()
     {
+        try
+        {
+            $data=Request::all();
+            //dd($data);
+            \EasyPost\EasyPost::setApiKey('ajOHvmDFRcFhzktqnxsIAg');
+            
+            $to_address_params=array(
+                    "name"    =>  $data['name'],
+                    "street1" =>  $data['street1'],
+                    "street2" =>  $data['street2'],
+                    "city"    =>  $data['city'],
+                    "state"   =>  $data['state'],
+                    "zip"     =>  $data['zip'],
+                    "phone"   =>  $data['phone'],
+                );
 
-        $data=Request::all();
-        //dd($data);
-        \EasyPost\EasyPost::setApiKey('ajOHvmDFRcFhzktqnxsIAg');
+            $from_address_params=array(
+                    "company"    =>  $data['from_company_name'],
+                    "street1" =>  $data['from_street1'],
+                    "street2" =>  $data['from_street2'],
+                    "city"    =>  $data['from_city'],
+                    "state"   =>  $data['from_state'],
+                    "zip"     =>  $data['from_zip'],
+                    "phone"   =>  $data['from_phone'],
+                );
 
+            $verified_to_address=\EasyPost\Address::create_and_verify($to_address_params);
 
-        $to_address = \EasyPost\Address::create(
-            array(
-                "name"    =>  $data['name'],
-                "street1" =>  $data['street1'],
-                "street2" =>  $data['street2'],
-                "city"    =>  $data['city'],
-                "state"   =>  $data['state'],
-                "zip"     =>  $data['zip'],
-                "phone"   =>  $data['phone'],
-            )
-        );
+            $verified_from_address=\EasyPost\Address::create_and_verify($from_address_params);
 
-        $from_address = \EasyPost\Address::create(
-            array(
-                "company"    =>  $data['from_company_name'],
-                "street1" =>  $data['from_street1'],
-                "street2" =>  $data['from_street2'],
-                "city"    =>  $data['from_city'],
-                "state"   =>  $data['from_state'],
-                "zip"     =>  $data['from_zip'],
-                "phone"   =>  $data['from_phone'],
-            )
-        );
+            
+           
+            
+            $parcel = \EasyPost\Parcel::create(
+                array(
+                    "predefined_package" => "LargeFlatRateBox",
+                    "weight" => 76.9
+                )
+            );
 
+            $shipment = \EasyPost\Shipment::create(
+                array(
+                    "to_address"   => $verified_to_address,
+                    "from_address" => $verified_from_address,
+                    "parcel"       => $parcel
+                )
+            );
+           // dd();
+            //dd($shipment);
+            $shipment->buy($shipment->lowest_rate());
+
+            $shipment->insure(array('amount' => 100));
+            //dd($shipment->postage_label);
+
+            $label=$shipment->postage_label->label_url;
+
+            return view('generate_label',compact('label'));
+        }
+        catch(\Exception $e) 
+        {
+            // echo $e;
+            // return;
+
+            $status=$e->getHttpStatus();
+            //dd($status);
+            $message=$e->getMessage();
+            $error="\nStatus: ".$status."\n".$message;
+            if (!empty($e->param)) {
+                $error=$error."\nInvalid param: {$e->param}";
+            }
+            Session::flash('error',$error);
+            return redirect('/');
+        }
         
-        $parcel = \EasyPost\Parcel::create(
-            array(
-                "predefined_package" => "LargeFlatRateBox",
-                "weight" => 76.9
-            )
-        );
-        $shipment = \EasyPost\Shipment::create(
-            array(
-                "to_address"   => $to_address,
-                "from_address" => $from_address,
-                "parcel"       => $parcel
-            )
-        );
-
-        $shipment->buy($shipment->lowest_rate());
-
-        $shipment->insure(array('amount' => 100));
-        //dd($shipment->postage_label);
-
-        $label=$shipment->postage_label->label_url;
-
-        return view('generate_label',compact('label'));
 
     }
 

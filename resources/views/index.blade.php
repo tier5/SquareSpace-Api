@@ -44,6 +44,25 @@
       </nav>
       <div class="container">
          <div class="row">
+            <div class="log_inner text-center">
+              @if(Session::has('error'))
+              <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{!! Session::get('error') !!}</strong>
+              </div>
+              @endif
+              @if(Session::has('success'))
+              <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{!! Session::get('success') !!}</strong>
+              </div>
+              @endif
+            </div>
+
+            <?php
+            Session::forget('error');
+            Session::forget('success');
+            ?>
             <form class="form-horizontal" id="create-label" method="POST" action="{{route('generateLabel')}}">
                {{ csrf_field() }}
                <div class="col-md-8 col-md-offset-2">
@@ -265,7 +284,7 @@
          </div>
       </div>
       <!-- Scripts -->
-      <script type="text/javascript">
+<!--       <script type="text/javascript">
          $(function()
          {
            $("#create-label").validate(
@@ -332,5 +351,5 @@
            });
          });
       </script>
-   </body>
+ -->   </body>
 </html>
