@@ -1,10 +1,17 @@
 <?php
 
+
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use Usps;
-
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Request;
+use EasyPost;
+use Session;
+use App;
+use View;
+use PDF;
+use Dompdf\Dompdf;
+use Response;
 class HomeController extends Controller
 {
     /**

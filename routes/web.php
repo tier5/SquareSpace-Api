@@ -28,3 +28,6 @@ Route::post('print-label', ['uses' => 'LabelController@printLabel'])->name('prin
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/give-order', 'OrderController@index')->name('order');
+Route::get('/order/{id}', 'OrderController@getOrderDetails')->name('getOrder');
+

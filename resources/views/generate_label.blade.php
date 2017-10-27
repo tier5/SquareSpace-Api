@@ -47,7 +47,7 @@
          <div class="row">
                <div class="col-md-8 col-md-offset-2">
                   <div class="panel panel-default">
-                     <div class="panel-heading">To Address Details</div>
+                     <div class="panel-heading">To Address Details&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="{{route('order')}}" class="btn btn-info">Schedule Pickup</a></div>
                      <div class="panel-body">
                         <div class="form-group">
                            <div class="col-md">
@@ -65,6 +65,7 @@
                               </div>
                            </div>
                         </form>
+
                      </div>
                   </div>
                </div>
