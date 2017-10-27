@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['middleware' => 'forcehttps'], function () {
 
 Route::get('/', function () {
     return view('index');
@@ -20,10 +19,12 @@ Route::get('/index', function () {
     return view('index');
 });
 
-Route::post('get-label', ['uses' => 'LabelController@getLabel', 'https' => true])->name('getLabel');
+Route::post('generate-label', ['uses' => 'LabelController@generateLabel'])->name('generateLabel');
 
+Route::post('print-label', ['uses' => 'LabelController@printLabel'])->name('printLabel');
+
+//Route::get('generate-label', ['uses' => 'LabelController@generateLabel']);
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-});

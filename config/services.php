@@ -37,7 +37,5 @@ return [
 
     'usps' => [
         'username' => '911TIER55706',
-        'password' => '760GT74OH945',
-
     ]
 ];
