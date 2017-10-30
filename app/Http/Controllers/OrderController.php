@@ -61,7 +61,7 @@ class OrderController extends Controller
 
             $orders = \EasyPost\Order::all();
             Session::flash('success','Order generated successfully');
-            return view('order-details',compact('orders'));
+            return redirect('/order-details');
            
          } 
          catch (\Exception $e) 
@@ -78,22 +78,21 @@ class OrderController extends Controller
          }
     }
 
-    /*to print the label */
+    /*to get all the orders */
     public function getOrderDetails()
     {
-      // EasyPost\EasyPost::setApiKey("ajOHvmDFRcFhzktqnxsIAg");
       try{
          \EasyPost\EasyPost::setApiKey("ajOHvmDFRcFhzktqnxsIAg");
-          $order = \EasyPost\Order::all();
-        // dd($order);
-          return view('order-details',compact('order'));
+          $orders = \EasyPost\Order::all();
+        //dd($order);
+          $details['total']=count($orders);
+
+          return view('order-details',compact('orders'));
           }
           catch(\EasyPost\Error $e)
           {
              echo $e->ecode;
           }
-
-
     }
     public function createOrder()
     {
@@ -139,6 +138,7 @@ class OrderController extends Controller
           ),
       ));
      dd($order);
+
     }
     
 }

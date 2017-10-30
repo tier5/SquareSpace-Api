@@ -20,7 +20,6 @@
                     </div>
                     @endif
                   </div>
-
                   <?php
                   Session::forget('error');
                   Session::forget('success');
@@ -29,12 +28,20 @@
                     <thead>
                       <tr>
                         <th>Order_id</th>
+                        <th>Mode</th>
+                        <td>Order_date</td>
+                        <td>Track</td>
                       </tr>
                     </thead>
                     <tbody>
                       @foreach($orders as $value)
                       <tr>
-                        <td>{{$value->id}}</td>
+                        <td id="order_id">{{$value->id}}</td>
+                        <td>{{$value->mode}}</td>
+                        <td>{{$value->created_at}}</td>
+                         <td>
+                          <button type="button" class="btn btn-primary" id="details" onclick="return show('{{$value->id}}')">Details </button>
+                        </td>
                       </tr>
                       @endforeach
                     </tbody>
@@ -43,4 +50,12 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+   function show(row_value) 
+   {
+      var row_data = row_value;
+      alert("Order Details of "+ row_data+" is under construction.");
+    
+   }; 
+</script>
 @endsection

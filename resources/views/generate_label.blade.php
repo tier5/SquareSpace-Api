@@ -56,30 +56,36 @@
                               <img src="{{$label}}"  id="image" height="600" width="500">
                            </div>
                         </div>
-                        <form action="{{route('printLabel')}}" method="POST">
-                           {{csrf_field()}}
-                           <div class="form-group">
-                              <input type="hidden" name="label" value="{{$label}}">
-                              <div class="col-md-8 col-md-offset-4">
-                                 <button type="submit" class="btn btn-primary">
-                                 Print Label
-                                 </button>
-                              </div>
+                        <div class="form-group">
+                           <div class="col-md-4">
+                              <form action="{{route('printLabel')}}" method="POST">
+                                 {{csrf_field()}}
+                                 <div class="form-group">
+                                    <input type="hidden" name="label" value="{{$label}}">
+                                    <div class="col-md-8 col-md-offset-4">
+                                       <button type="submit" class="btn btn-primary">
+                                       Print Label
+                                       </button>
+                                    </div>
+                                 </div>
+                              </form>
                            </div>
-                        </form>
-                        <form action="{{route('createOrder')}}" method="POST">
-                           {{csrf_field()}}
-                           <div class="form-group">
-                              <input type="hidden" name="to_address" value="{{json_encode($to_address_params)}}">
-                              <input type="hidden" name="from_address" value="{{json_encode($from_address_params)}}">
-                              <input type="hidden" name="shipment_id" value="{{$shipment_id}}">
-                              <div class="col-md-8 col-md-offset-4">
-                                 <button type="submit" class="btn btn-primary">
-                                 Create Order
-                                 </button>
-                              </div>
+                           <div class="col-md-4">
+                              <form action="{{route('createOrder')}}" method="POST">
+                                 {{csrf_field()}}
+                                 <div class="form-group">
+                                    <input type="hidden" name="to_address" value="{{json_encode($to_address_params)}}">
+                                    <input type="hidden" name="from_address" value="{{json_encode($from_address_params)}}">
+                                    <input type="hidden" name="shipment_id" value="{{$shipment_id}}">
+                                    <div class="col-md-8 col-md-offset-4">
+                                       <button type="submit" class="btn btn-primary">
+                                       Create Order
+                                       </button>
+                                    </div>
+                                 </div>
+                              </form>
                            </div>
-                        </form>
+                        </div>
                      </div>
                   </div>
                </div>
