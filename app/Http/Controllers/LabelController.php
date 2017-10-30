@@ -34,7 +34,7 @@ class LabelController extends Controller
                 );
 
             $from_address_params=array(
-                    "company"    =>  $data['from_company_name'],
+                    "company" =>  $data['from_company_name'],
                     "street1" =>  $data['from_street1'],
                     "street2" =>  $data['from_street2'],
                     "city"    =>  $data['from_city'],
@@ -65,15 +65,17 @@ class LabelController extends Controller
                 )
             );
            // dd();
-            //dd($shipment);
+            //
             $shipment->buy($shipment->lowest_rate());
 
             $shipment->insure(array('amount' => 100));
             //dd($shipment->postage_label);
 
             $label=$shipment->postage_label->label_url;
-
-            return view('generate_label',compact('label'));
+            //dd($shipment->id);
+            $shipment_id=$shipment->id;
+            
+            return view('generate_label',compact('label','to_address_params','from_address_params','shipment_id'));
         }
         catch(\Exception $e) 
         {
