@@ -34,7 +34,9 @@ class OrderController extends Controller
       try{
          \EasyPost\EasyPost::setApiKey("ajOHvmDFRcFhzktqnxsIAg");
           $order = \EasyPost\Order::all();
-        // dd($order);
+//dd($order);
+          $details['total']=count($order);
+
           return view('order-details',compact('order'));
           }
           catch(\EasyPost\Error $e)
@@ -81,7 +83,7 @@ class OrderController extends Controller
         ),
         array(
             "parcel" => array(
-                "predefined_package" => "FedExBox",
+                "predefined_package1" => "FedExBoxOn",
                 "weight" => 17.5
             )
         ),
